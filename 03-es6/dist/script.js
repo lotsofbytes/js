@@ -63,114 +63,134 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-var images = [];
+"use strict";
+class Puzzle {
 
-// preload images
+	constructor() {
+		// randomize numbers for images
+		let random = this.shuffleArray(Array.from(Array(36).keys()));
 
-for (i = 0; i < 36; i++) {
-	j = i + 1; // filename start with 1
-	images[i] = new Image();
-	images[i].src = j < 10 ? 'images/JoCard_0' + j + '.jpg' : 'images/JoCard_' + j + '.jpg';
-}
+		this.cells = [];
+		this.blank = Math.floor(Math.random() * 34); // random between 0 to 35
 
-function shuffleArray(array) {
-	for (let i = array.length - 1; i > 0; i--) {
-		let j = Math.floor(Math.random() * (i + 1));
-		let temp = array[i];
-		array[i] = array[j];
-		array[j] = temp;
-	}
-	return array;
-}
+		// initialize cells
+		let index = 0;
 
-function inCell(x, y, target) {
-	return x >= target.x && x <= target.x + 90 && y >= target.y && y <= target.y + 90;
-}
+		for (let i = 0; i <= 5; i++) {
+			for (let j = 0; j <= 5; j++) {
 
-function whichCell(cells, x, y) {
-	let i = 0;
-	for (let cell of cells) {
-		if (inCell(x, y, cell)) return i;
-		i++;
-	}
+				let imageNum = random.shift();
 
-	return false; // not on any cell
-}
+				if (index === this.blank) imageNum = null;
 
-function isAdjacentToBlank(cells, clicked, blank) {
-	return true;
-}
-
-function swapImageAndBlank(cells, clicked, blank) {
-	targetImageNum = cells[clicked].img;
-
-	console.log('clicked=' + clicked + ' blank=' + blank);
-
-	cells[clicked].img = null;
-	cells[blank].img = targetImageNum;
-
-	return cells;
-}
-
-window.onload = function () {
-
-	let canvas = document.getElementById("canvas"),
-	    context = canvas.getContext("2d"),
-	    cells = [],
-	    blank;
-
-	// randomize numbers for images
-	random = shuffleArray(Array.from(Array(36).keys()));
-	blank = Math.floor(Math.random() * 34); // random between 0 to 35
-
-	// initialize cells
-	let b = 0;
-	for ($i = 0; $i <= 5; $i++) {
-		for ($j = 0; $j <= 5; $j++) {
-
-			imageNum = random.shift();
-
-			if (b === blank) imageNum = null;
-
-			cells[b] = { x: $i * 100, y: $j * 100, img: imageNum };
-			b++;
-		}
-	}
-
-	// display images
-	displayGrid();
-
-	function displayGrid() {
-		for (i = 0; i < 36; i++) {
-			if (cells[i].img === null) {
-				context.fillStyle = "black";
-				context.fillRect(cells[i].x, cells[i].y, 90, 90);
-			} else {
-				context.drawImage(images[cells[i].img], cells[i].x, cells[i].y);
+				this.cells[index] = {
+					x: i * 100,
+					y: j * 100,
+					img: imageNum
+				};
+				index++;
 			}
 		}
 	}
 
+	shuffleArray(array) {
+		for (let i = array.length - 1; i > 0; i--) {
+			let j = Math.floor(Math.random() * (i + 1));
+			let temp = array[i];
+			array[i] = array[j];
+			array[j] = temp;
+		}
+		return array;
+	}
+
+	inCell(x, y, target) {
+		return x >= target.x && x <= target.x + 90 && y >= target.y && y <= target.y + 90;
+	}
+
+	whichCell(x, y) {
+		let i = 0;
+		for (let cell of this.cells) {
+			if (this.inCell(x, y, cell)) return i;
+			i++;
+		}
+		return false; // not on any cell
+	}
+
+	isAdjacentToBlank(clicked) {
+		return true;
+	}
+
+	swapImageAndBlank(clicked) {
+		let target = this.cells[clicked].img;
+
+		console.log('clicked=' + clicked + ' blank=' + this.blank);
+
+		this.cells[clicked].img = null;
+		this.cells[this.blank].img = target;
+		this.blank = clicked;
+	}
+
+	display(context, images) {
+		for (let i = 0; i < 36; i++) {
+			if (this.cells[i].img === null) {
+				context.fillStyle = "black";
+				context.fillRect(this.cells[i].x, this.cells[i].y, 90, 90);
+			} else {
+				context.drawImage(images[this.cells[i].img], this.cells[i].x, this.cells[i].y);
+			}
+		}
+	}
+
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = Puzzle;
+
+
+/***/ }),
+/* 1 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Puzzle__ = __webpack_require__(0);
+
+
+var images = [];
+
+// p, imagesreload images
+
+for (let i = 0; i < 36; i++) {
+	let j = i + 1; // filename start with 1
+	images[i] = new Image();
+	images[i].src = j < 10 ? 'images/JoCard_0' + j + '.jpg' : 'images/JoCard_' + j + '.jpg';
+}
+
+window.onload = function () {
+
+	var johnny = new __WEBPACK_IMPORTED_MODULE_0__Puzzle__["a" /* Puzzle */]();
+
+	var canvas = document.getElementById("canvas"),
+	    context = canvas.getContext("2d");
+
+	// display images
+	johnny.display(context, images);
+
 	canvas.addEventListener("click", function (event) {
-		rect = canvas.getBoundingClientRect();
-
-		x = event.clientX - rect.left;
-		y = event.clientY - rect.top;
-
-		clicked = whichCell(cells, x, y);
+		let rect = canvas.getBoundingClientRect();
+		let x = event.clientX - rect.left;
+		let y = event.clientY - rect.top;
+		let clicked = johnny.whichCell(x, y);
 
 		if (clicked !== false) {
-			if (isAdjacentToBlank(cells, clicked, blank)) {
-				cells = swapImageAndBlank(cells, clicked, blank);
-				blank = clicked;
-				displayGrid();
+			if (johnny.isAdjacentToBlank(clicked)) {
+				johnny.swapImageAndBlank(clicked);
+				johnny.display(context, images);
 			}
 			//			context.fillStyle = "red";
 			//			context.fillRect(cell.x, cell.y, 90, 90);
@@ -178,12 +198,10 @@ window.onload = function () {
 	});
 
 	canvas.addEventListener("mousemove", function (event) {
-		rect = canvas.getBoundingClientRect();
-
-		x = event.clientX - rect.left;
-		y = event.clientY - rect.top;
-
-		clicked = whichCell(cells, x, y);
+		let rect = canvas.getBoundingClientRect();
+		let x = event.clientX - rect.left;
+		let y = event.clientY - rect.top;
+		let clicked = johnny.whichCell(x, y);
 
 		if (clicked !== false) {
 			canvas.style.cursor = "pointer";
