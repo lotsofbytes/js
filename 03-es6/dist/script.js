@@ -77,7 +77,7 @@ var images = [];
 for (i = 0; i < 36; i++) {
 	j = i + 1; // filename start with 1
 	images[i] = new Image();
-	images[i].src = j < 10 ? 'JoCard_0' + j + '.jpg' : 'JoCard_' + j + '.jpg';
+	images[i].src = j < 10 ? 'images/JoCard_0' + j + '.jpg' : 'images/JoCard_' + j + '.jpg';
 }
 
 function shuffleArray(array) {
