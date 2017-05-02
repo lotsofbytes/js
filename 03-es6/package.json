@@ -1,0 +1,22 @@
+{
+  "name": "Learn",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "babel-cli": "^6.24.1"
+  },
+  "devDependencies": {
+    "babel-loader": "^7.0.0",
+    "babel-preset-env": "^1.4.0",
+    "buble": "^0.15.2",
+    "buble-loader": "^0.4.1",
+    "webpack": "^2.4.1"
+  },
+  "scripts": {
+    "build": "webpack"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
