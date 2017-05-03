@@ -15,7 +15,7 @@ export class Puzzle {
 
 				let imageNum = random.shift();
 
-				if (index === this.blank) imageNum = null;
+				if (index === this.blank) imageNum = null; // blank
 
 				this.cells[index] = {
 					x: i*100,
@@ -24,6 +24,15 @@ export class Puzzle {
 				};
 				index++;
 			}
+		}
+
+		// preload images
+		this.images = [];
+
+		for (let i = 0; i < 36; i++) {
+			let j = i + 1; // filename start with 1
+			this.images[i] = new Image();
+			this.images[i].src = (j < 10) ? 'images/JoCard_0' + j + '.jpg' : 'images/JoCard_' + j + '.jpg';
 		}
 	}
 
@@ -69,14 +78,15 @@ export class Puzzle {
 		this.blank = clicked;
 	}
 
-	display(context, images) {
+	display(context) {
+
 		for (let i = 0; i < 36; i++) {
 			if (this.cells[i].img === null) {
 				context.fillStyle = "black";
 				context.fillRect(this.cells[i].x, this.cells[i].y, 90, 90);
 			}
 			else {
-				context.drawImage(images[this.cells[i].img], this.cells[i].x, this.cells[i].y);
+				context.drawImage(this.images[this.cells[i].img], this.cells[i].x, this.cells[i].y);
 			}
 		}
 	}

@@ -1,26 +1,13 @@
 import { Puzzle } from './Puzzle';
 
-var images = [];
-
-// p, imagesreload images
-
-for (let i = 0; i < 36; i++) {
-	let j = i + 1; // filename start with 1
-	images[i] = new Image();
-	images[i].src = (j < 10) ? 'images/JoCard_0' + j + '.jpg' : 'images/JoCard_' + j + '.jpg';
-}
-
+var johnny = new Puzzle();
 
 window.onload = function () {
-
-	var johnny = new Puzzle();
 
 	var canvas = document.getElementById("canvas"),
 		context = canvas.getContext("2d");
 
-
-	// display images
-	johnny.display(context, images);
+	johnny.display(context);
 
 	canvas.addEventListener("click", function(event) {
 		let rect = canvas.getBoundingClientRect();
@@ -31,7 +18,7 @@ window.onload = function () {
 		if (clicked !== false) {
 			if (johnny.isAdjacentToBlank(clicked)) {
 				johnny.swapImageAndBlank(clicked);
-				johnny.display(context, images);
+				johnny.display(context);
 			}
 //			context.fillStyle = "red";
 //			context.fillRect(cell.x, cell.y, 90, 90);

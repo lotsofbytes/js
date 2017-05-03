@@ -88,7 +88,7 @@ class Puzzle {
 
 				let imageNum = random.shift();
 
-				if (index === this.blank) imageNum = null;
+				if (index === this.blank) imageNum = null; // blank
 
 				this.cells[index] = {
 					x: i * 100,
@@ -97,6 +97,15 @@ class Puzzle {
 				};
 				index++;
 			}
+		}
+
+		// preload images
+		this.images = [];
+
+		for (let i = 0; i < 36; i++) {
+			let j = i + 1; // filename start with 1
+			this.images[i] = new Image();
+			this.images[i].src = j < 10 ? 'images/JoCard_0' + j + '.jpg' : 'images/JoCard_' + j + '.jpg';
 		}
 	}
 
@@ -137,13 +146,14 @@ class Puzzle {
 		this.blank = clicked;
 	}
 
-	display(context, images) {
+	display(context) {
+
 		for (let i = 0; i < 36; i++) {
 			if (this.cells[i].img === null) {
 				context.fillStyle = "black";
 				context.fillRect(this.cells[i].x, this.cells[i].y, 90, 90);
 			} else {
-				context.drawImage(images[this.cells[i].img], this.cells[i].x, this.cells[i].y);
+				context.drawImage(this.images[this.cells[i].img], this.cells[i].x, this.cells[i].y);
 			}
 		}
 	}
@@ -161,25 +171,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Puzzle__ = __webpack_require__(0);
 
 
-var images = [];
-
-// p, imagesreload images
-
-for (let i = 0; i < 36; i++) {
-	let j = i + 1; // filename start with 1
-	images[i] = new Image();
-	images[i].src = j < 10 ? 'images/JoCard_0' + j + '.jpg' : 'images/JoCard_' + j + '.jpg';
-}
+var johnny = new __WEBPACK_IMPORTED_MODULE_0__Puzzle__["a" /* Puzzle */]();
 
 window.onload = function () {
-
-	var johnny = new __WEBPACK_IMPORTED_MODULE_0__Puzzle__["a" /* Puzzle */]();
 
 	var canvas = document.getElementById("canvas"),
 	    context = canvas.getContext("2d");
 
-	// display images
-	johnny.display(context, images);
+	johnny.display(context);
 
 	canvas.addEventListener("click", function (event) {
 		let rect = canvas.getBoundingClientRect();
@@ -190,7 +189,7 @@ window.onload = function () {
 		if (clicked !== false) {
 			if (johnny.isAdjacentToBlank(clicked)) {
 				johnny.swapImageAndBlank(clicked);
-				johnny.display(context, images);
+				johnny.display(context);
 			}
 			//			context.fillStyle = "red";
 			//			context.fillRect(cell.x, cell.y, 90, 90);
