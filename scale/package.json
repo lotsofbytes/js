@@ -2,16 +2,22 @@
   "name": "Learn",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "homepage" : "https://www.larajapan.com/js/scale/build",
   "dependencies": {},
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-scripts": "^1.1.1",
     "webpack": "^3.11.0"
   },
   "scripts": {
-    "build": "webpack"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
   },
   "keywords": [],
   "author": "",
