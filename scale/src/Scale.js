@@ -24,11 +24,6 @@ class Scale extends Component {
 
     if (navigator.usb) {
 
-      navigator.usb.addEventListener("connect", e => {
-        console.log("device connected", e);
-        this.bindDevice(e.device);
-      });
-
       navigator.usb.addEventListener("disconnect", e => {
         console.log("device lost", e);
         this.disconnect();
@@ -129,7 +124,6 @@ class Scale extends Component {
 
   render() {
     const {
-      device,
       connected,
       shouldRead,
       weight,
@@ -154,16 +148,10 @@ class Scale extends Component {
         {!connected &&
           <button onClick={this.connect}>Register Device</button>}
 
-        {connected && !shouldRead &&
-          <button onClick={this.getWeight}>▶</button>}
-
-        {connected && shouldRead &&
-          <button onClick={this.stopWeight}>⏸</button>}
-
         {connected &&
           <span className="scale">
             <small>{scaleState}</small>
-            {weight}
+            <span id="weight">{weight}</span>
             <small>{unit}</small>
           </span>}
       </main>
