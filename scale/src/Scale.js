@@ -35,11 +35,11 @@ class Scale extends Component {
       });
 
       this.connect = () => {
-		  navigator.usb.getDevices({ filters: this.USB_FILTERS }).then(devices => {
-			  devices.forEach(device => {
-				  this.bindDevice(device);
-			  });
-		  });
+  		  navigator.usb.getDevices({ filters: this.USB_FILTERS }).then(devices => {
+  			  devices.forEach(device => {
+  				  this.bindDevice(device);
+  			  });
+  		  });
       };
     }
 
@@ -145,22 +145,20 @@ class Scale extends Component {
         </h1>
 
         {!navigator.usb &&
-          <p>
-            Please enable chrome://flags/#enable-experimental-web-platform-features
+          <p> Please enable chrome://flags/#enable-experimental-web-platform-features
           </p>}
 
         {errorMsg &&
-          <p>
-            {errorMsg}
-          </p>}
+          <p>{errorMsg}</p>}
 
-        {connected &&
-          !shouldRead &&
+        {!connected &&
+          <button onClick={this.connect}>Register Device</button>}
+
+        {connected && !shouldRead &&
           <button onClick={this.getWeight}>▶</button>}
 
-        {shouldRead && <button onClick={this.stopWeight}>⏸</button>}
-
-        {!device && <button onClick={this.connect}>Register Device</button>}
+        {connected && shouldRead &&
+          <button onClick={this.stopWeight}>⏸</button>}
 
         {connected &&
           <span className="scale">

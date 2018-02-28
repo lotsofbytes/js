@@ -2,7 +2,7 @@
   "name": "Learn",
   "version": "1.0.0",
   "description": "",
-  "homepage" : "https://www.larajapan.com/js/scale/build",
+  "homepage": "https://www.larajapan.com/js/scale/build",
   "dependencies": {},
   "devDependencies": {
     "babel-cli": "^6.26.0",
