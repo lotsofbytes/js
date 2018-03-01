@@ -29,19 +29,22 @@ class Scale extends Component {
         this.disconnect();
       });
 
-      this.connect = () => {
-  		  navigator.usb.getDevices({ filters: this.USB_FILTERS }).then(devices => {
-  			  devices.forEach(device => {
-  				  this.bindDevice(device);
-  			  });
-  		  });
-      };
+	  this.connect();
     }
 
     this.getWeight = this.getWeight.bind(this);
     this.stopWeight = this.stopWeight.bind(this);
     this.bindDevice = this.bindDevice.bind(this);
+    this.connect = this.connect.bind(this);
     this.disconnect = this.disconnect.bind(this);
+  }
+
+  connect() {
+	  navigator.usb.getDevices({ filters: this.USB_FILTERS }).then(devices => {
+		  devices.forEach(device => {
+			  this.bindDevice(device);
+		  });
+	  });
   }
 
   getWeight() {
