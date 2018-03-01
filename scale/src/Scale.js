@@ -128,7 +128,6 @@ class Scale extends Component {
   render() {
     const {
       connected,
-      shouldRead,
       weight,
       unit,
       scaleState,
@@ -149,7 +148,7 @@ class Scale extends Component {
           <p>{errorMsg}</p>}
 
         {!connected &&
-          <button onClick={this.connect}>Register Device</button>}
+          <button id="register" onClick={this.connect}>Register Device</button>}
 
         {connected &&
           <span className="scale">
